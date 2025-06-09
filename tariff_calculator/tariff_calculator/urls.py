@@ -19,7 +19,8 @@ from django.urls import path
 import calculator.views as views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.tariffs),
+    path('tariffs/', views.tariffs,name="tariffs"),
     path('save_tariff/', views.save_tariff),
     path('delete_tariff/<int:tariff_id>/',views.delete_tariff),
+    path('calculator/', views.calculator_view, name="calculator"),
 ]

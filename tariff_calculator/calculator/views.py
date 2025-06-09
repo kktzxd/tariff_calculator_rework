@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse, Http404
+from django.http import HttpRequest, HttpResponse, Http404, JsonResponse
 from calculator.models import Tariff
 from logging import log
 from django.views.decorators.csrf import csrf_exempt
@@ -43,4 +43,10 @@ def delete_tariff(request:HttpRequest, tariff_id:int):
             tariff.delete()
         return HttpResponse()
 
-        
+def calculator_view(request:HttpRequest):
+    tariffs = calculator.seriallizers.tariff_serializer()
+    return render(request, "calculator.html", tariffs)
+def get_tarrifs(request:HttpRequest):
+        tariffs = calculator.seriallizers.tariff_serializer()
+        tariffs = json.loads(tariffs)
+        return JsonResponse(tariffs)

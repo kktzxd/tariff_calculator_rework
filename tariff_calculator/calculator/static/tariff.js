@@ -10,7 +10,7 @@ function delete_tariff(tariff){
     let request = new XMLHttpRequest()
     let url = `http://10.10.5.24:8008/delete_tariff/` + id + "/";
 
-    request.open("DELETE", url, true);
+    request.open("DELETE", url, false);
     request.setRequestHeader("Content-Type", "application/json");
     request.send()
     console.log(request.status);
@@ -78,7 +78,7 @@ function save_changes(row){
         "cost":cost
     }
     let request = new XMLHttpRequest();
-    request.open("POST", url, true);
+    request.open("POST", url, false);
     request.setRequestHeader("Content-Type", "application/json");
     request.send(JSON.stringify(params));
     console.log(request.status)
