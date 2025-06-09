@@ -1,0 +1,15 @@
+Django==5.2
+django-extensions
+django-rest-framework
+djangorestframework_simplejwt
+dotenv
+psycopg
+psycopg-binary
+pandas
+numpy
+matplotlib
+scipy
+drf-yasg
+setuptools
+coreapi
+pytest

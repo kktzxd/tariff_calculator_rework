@@ -1,0 +1,27 @@
+{%load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="{% static 'style.css' %}" type="text/css" rel="stylesheet">
+    <title>Тарифы</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<h1>Тарифный план</h1>
+    <button class="button" onclick="add_tariff()">Добавить тариф</button>
+    <div id="tariffs">
+    {% for  tariff in tariffs%}
+    <div class="row" id={{tariff.id}}>
+        <div class="cell id">{{tariff.id}}</div>
+        <div class="cell start_date">{{tariff.start_date}}</div>
+        <div class="cell end_date">{{tariff.end_date}}</div>
+        <div class="cell cost">{{tariff.cost}}</div>
+        <button class="button" onclick="delete_tariff(this)">удалить тариф</button>
+        <button class="button" onclick="change_tariff(this)">изменить тариф</button>
+
+    </div>
+    {% endfor %}
+    </div>
+</body>
+<script src="{% static 'tariff.js'%}"></script>
+</html>
