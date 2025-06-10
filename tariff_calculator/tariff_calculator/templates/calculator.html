@@ -7,6 +7,31 @@
     </head>
     <body>
         <a href="{%url 'tariffs' %}"><button class="button">Тарифы</button></a>
+        <h1>Расчет платежа</h1>
+        <div class="cell">
+            <label for="start_date">Начало</label>
+            <select id="start_date" name="start_date">
+                {% for tariff in tariffs %}
+                <option>{{tariff.start_date}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="cell">
+            <label for="end_date">Конец</label>
+            <select id="end_date" name="end_date">
+                {% for tariff in tariffs %}
+                <option>{{tariff.end_date}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="cell">
+            <label for="square">Площадь</label>
+            <input id="square" name="square" maxlength="10" size="10">
+        </div>
+        <button class="button">Расчитать стоимость</button>
+        <div id = result class="cell"></div>
+
+
     </body>
     <script src="{% static 'calculator.js' %}"></script>
 </html>
