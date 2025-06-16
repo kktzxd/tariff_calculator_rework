@@ -2,6 +2,8 @@ from django.test import TestCase
 import unittest
 from calculator.models import Tariff
 from utils.date_formetter import ru_to_ISO
+from datetime import timedelta
+from math import ceil
 class DateFilterTest(TestCase):
 
     def setUp(self):
@@ -34,3 +36,49 @@ class DateFilterTest(TestCase):
         all_tarrifs = Tariff.objects.all()
         self.assertTrue(len(all_tarrifs)!=0)
         self.assertEqual(len(filter_tariffs), 2)
+
+    def test_calculate_month(self):
+        start_date = "10.10.2020"
+        end_date = "09.11.2020"
+        start_date = ru_to_ISO(start_date)
+        end_date = ru_to_ISO(end_date)
+        filter_tariffs = Tariff.objects.filter(start_date__gte=start_date, end_date__lte=end_date)
+        print("Платежи за месяц")
+        result = 0
+        for tariff in filter_tariffs:
+            print(tariff.start_date, tariff.end_date)
+            cost_per_day = tariff.cost/30
+            cur_date = tariff.start_date
+            while cur_date < tariff.end_date:
+                result += cost_per_day
+                cur_date+=timedelta(days=1)
+        result = ceil(result)
+        print(result)
+    def test_calculate_all_period(self):
+        start_date = "10.10.2020"
+        end_date = "31.12.2021"
+        start_date = ru_to_ISO(start_date)
+        end_date = ru_to_ISO(end_date)
+        filter_tariffs = Tariff.objects.filter(start_date__gte=start_date, end_date__lte=end_date)
+        print("Платежи за все время")
+        result = 0
+        for tariff in filter_tariffs:
+            print(tariff.start_date, tariff.end_date)
+            cost_per_day = tariff.cost/30
+            cur_date = tariff.start_date
+            while cur_date <= tariff.end_date:
+                result += cost_per_day
+                cur_date+=timedelta(days=1)
+        result = ceil(result)
+        print(result)
+    def test_get_total_days(self):
+        date_set = set()
+        tariffs = Tariff.objects.all()
+        for tariff in tariffs:
+            start = tariff.start_date
+            end = tariff.end_date
+            cur = start
+            while cur <= end:
+                date_set.add(cur)
+                cur+=timedelta(days=1)
+        self.assertEqual(len(date_set), 448)
