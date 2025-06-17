@@ -16,6 +16,18 @@
             "django": true,
             "autoStartBrowser": false,
             "program": "${workspaceFolder}/tariff_calculator/manage.py"
+        },
+        {
+            "name": "Django tests",
+            "type": "debugpy",
+            "request": "launch",
+            "args": [
+                "test",
+                "calculator"
+            ],
+            "django": true,
+            "autoStartBrowser": false,
+            "program": "${workspaceFolder}/tariff_calculator/manage.py"
         }
     ]
 }

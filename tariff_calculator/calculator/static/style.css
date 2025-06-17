@@ -136,3 +136,79 @@ body {
 .button:hover::after {
     transform: translateX(0);
 }
+/* Общие стили для формы */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    margin: 20px 0;
+    text-align: center;
+}
+
+/* Стили для формы */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.form-group label {
+    width: 100px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.form-input {
+    padding: 8px 12px;
+    border: 1px solid #d1e3f8;
+    border-radius: 4px;
+    background: #f0f7ff;
+    font-size: 14px;
+    width: 200px;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #4facfe;
+    box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.2);
+}
+
+/* Стили для кнопки расчета */
+.calculate-btn {
+    display: block;
+    margin: 25px auto;
+    padding: 10px 25px;
+}
+
+/* Стили для блока результата */
+.result-box {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #d1e3f8;
+    border-radius: 6px;
+    background: #f0f7ff;
+    min-height: 50px;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .form-group label {
+        margin-bottom: 5px;
+        width: auto;
+    }
+    
+    .form-input {
+        width: 100%;
+    }
+}
