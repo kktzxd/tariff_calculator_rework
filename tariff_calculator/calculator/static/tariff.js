@@ -98,12 +98,12 @@ function add_tariff(){
     let start_date = document.createElement("input");
     start_date.classList.add("cell");
     start_date.classList.add("start_date");
-    start_date.placeholder="Начало тарифа";
+    start_date.placeholder="Начало тарифа ДД.ММ.ГГГГ";
 
     let end_date = document.createElement("input");
     end_date.classList.add("cell");
     end_date.classList.add("end_date");
-    end_date.placeholder="Конец тарифа";
+    end_date.placeholder="Конец тарифа ДД.ММ.ГГГГ";
 
     let cost = document.createElement("input");
     cost.classList.add("cell");
@@ -121,6 +121,16 @@ function add_tariff(){
 
     row.appendChild(save_button);
 
+    let cancel_button = document.createElement("button");
+    cancel_button.textContent="Отменить изменения"
+    cancel_button.classList.add("button");
+    cancel_button.addEventListener("click", () => cancel_tariff(row))
+
+    row.appendChild(cancel_button);
+
     let tariffs = document.getElementById("tariffs");
     tariffs.append(row);
+}
+function cancel_tariff(row){
+    row.remove()
 }

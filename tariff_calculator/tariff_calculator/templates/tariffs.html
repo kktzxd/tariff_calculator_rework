@@ -11,18 +11,25 @@
 <h1>Тарифный план</h1>
     <button class="button" onclick="add_tariff()">Добавить тариф</button>
     <div id="tariffs">
-    {% for  tariff in tariffs%}
-    <div class="row" id={{tariff.id}}>
-        <div class="cell id">{{tariff.id}}</div>
-        <div class="cell start_date">{{tariff.start_date}}</div>
-        <div class="cell end_date">{{tariff.end_date}}</div>
-        <div class="cell cost">{{tariff.cost}}</div>
-        <button class="button" onclick="delete_tariff(this)">удалить тариф</button>
-        <button class="button" onclick="change_tariff(this)">изменить тариф</button>
+    
+        <div class="header_row">
+            <div class="label">Номер тарифа</div>
+            <div class="label">Начало тарифа</div>
+            <div class="label">Конец тарифа</div>
+            <div class="label">Стоимость тарифа</div>
+        </div>
+        {% for  tariff in tariffs%}
 
-    </div>
-    {% endfor %}
-    </div>
+        <div class="row" id={{tariff.id}}>
+            <div class="cell id">{{tariff.id}}</div>
+            <div class="cell start_date">{{tariff.start_date}}</div>
+            <div class="cell end_date">{{tariff.end_date}}</div>
+            <div class="cell cost">{{tariff.cost}}</div>
+            <button class="button" onclick="delete_tariff(this)">удалить тариф</button>
+            <button class="button" onclick="change_tariff(this)">изменить тариф</button>
+        </div>
+        {% endfor %}
+        </div>
 </body>
 <script src="{% static 'tariff.js'%}"></script>
 </html>
