@@ -28,19 +28,22 @@ function get_inputs(){
     let end = document.getElementById("end_date")
     let square = document.getElementById("square");
     let params = {
-        "start_date":start,
-        "end":end,
-        "square":square
+        "start_date":start.value,
+        "end_date":end.value,
+        "square":square.value
     }
     return params
 }
 function calculate(){
     let params = get_inputs()
-    let url = "http://10.10.5.24:8008/calculate";
+    let url = "http://10.10.5.24:8008/get_payment_cost/";
     let request = new XMLHttpRequest();
-    request.open("GET", url, false);
+    request.open("POST", url, false);
     request.setRequestHeader("Content-Type", "application/json");
     request.send(JSON.stringify(params));
-    console.log(request.status);
-    console.log(request.responseText);
+    let response = JSON.parse(request.responseText);
+    let payment = response["payment"]
+
+    let result = document.getElementById('result')
+    result.textContent = payment + " руб."
 }

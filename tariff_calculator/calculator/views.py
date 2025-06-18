@@ -8,6 +8,7 @@ import json
 from decimal import Decimal
 import calculator.seriallizers
 from rest_framework.response import Response
+from calculator.calculator import calculator as calc
 # Create your views here.
 def tariffs(request):
     # data = {
@@ -50,14 +51,13 @@ def get_tarrifs(request:HttpRequest):
         tariffs = calculator.seriallizers.tariff_serializer()
         tariffs = json.loads(tariffs)
         return JsonResponse(tariffs)
-
+@csrf_exempt
 def get_payment_cost(request:HttpRequest):
-    if request.method=="GET":
+    if request.method=="POST":
         data = json.loads(request.body)
         start_date = data["start_date"]
         end_date = data["end_date"]
         square = data["square"]
-        payment = calculator.calculator(start_date, end_date, square)
+        payment = calc(start_date, end_date, square)
         data = {"payment":payment}
-        data = json.dumps(data)
         return JsonResponse(data)
