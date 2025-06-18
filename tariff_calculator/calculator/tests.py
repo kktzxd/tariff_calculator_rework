@@ -4,6 +4,8 @@ from calculator.models import Tariff
 from utils.date_formetter import ru_to_ISO
 from datetime import timedelta
 from math import ceil
+from utils.timeit import timeit
+from calculator.calculator import calculator
 class DateFilterTest(TestCase):
 
     def setUp(self):
@@ -82,6 +84,7 @@ class DateFilterTest(TestCase):
                 date_set.add(cur)
                 cur+=timedelta(days=1)
         self.assertEqual(len(date_set), 448)
+    @timeit
     def test_calculate_payment(self):
         start_date = "10.10.2020"
         end_date = "20.10.2020"
@@ -98,5 +101,47 @@ class DateFilterTest(TestCase):
                     break
             self.assertIsNotNone(cost_per_day)
             result+=cost_per_day
+            cur_date += timedelta(days=1)
         print("За 10 дней", result)
         self.assertTrue(36<=result<=37)
+    @timeit
+    def test_big_data(self):
+        start_date = "10.10.2020"
+        end_date = "20.10.2020"
+        square = 100
+        start_date = ru_to_ISO(start_date)
+        end_date = ru_to_ISO(end_date)
+        cur_date = start_date
+        tariffs = Tariff.objects.all()
+        result = 0
+        while cur_date < end_date:
+            cost_per_day = None
+            for tariff in tariffs:
+                 if tariff.start_date <= cur_date <= tariff.end_date:
+                    cost_per_day = tariff.cost/30
+                    break
+            cur_date+=timedelta(days=1)
+            result+=cost_per_day
+        result*=square
+    def test_compare_code(self):
+        start_date = "10.10.2020"
+        end_date = "20.10.2020"
+        square = 100
+        compare_result = calculator(start_date, end_date, square)
+        start_date = ru_to_ISO(start_date)
+        end_date = ru_to_ISO(end_date)
+        cur_date = start_date
+        tariffs = Tariff.objects.all()
+        result = 0
+        while cur_date < end_date:
+            cost_per_day = None
+            for tariff in tariffs:
+                 if tariff.start_date <= cur_date <= tariff.end_date:
+                    cost_per_day = tariff.cost/30
+                    break
+            cur_date+=timedelta(days=1)
+            result+=cost_per_day
+        result*=square
+        self.assertEqual(result,compare_result)
+
+        

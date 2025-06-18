@@ -23,4 +23,5 @@ urlpatterns = [
     path('save_tariff/', views.save_tariff),
     path('delete_tariff/<int:tariff_id>/',views.delete_tariff),
     path('calculator/', views.calculator_view, name="calculator"),
+    path('get_payment_cost/',views.get_payment_cost)
 ]

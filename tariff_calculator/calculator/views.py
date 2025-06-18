@@ -51,11 +51,13 @@ def get_tarrifs(request:HttpRequest):
         tariffs = json.loads(tariffs)
         return JsonResponse(tariffs)
 
-def calculate(request:HttpRequest):
+def get_payment_cost(request:HttpRequest):
     if request.method=="GET":
         data = json.loads(request.body)
         start_date = data["start_date"]
         end_date = data["end_date"]
         square = data["square"]
-        tariffs = Tariff.objects.filter(start_date__gte=start_date, end_date__lte=end_date)
-        print(tariffs)
+        payment = calculator.calculator(start_date, end_date, square)
+        data = {"payment":payment}
+        data = json.dumps(data)
+        return JsonResponse(data)
