@@ -15,7 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, reverse
+from django.shortcuts import redirect
 import calculator.views as views
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,5 +24,7 @@ urlpatterns = [
     path('save_tariff/', views.save_tariff),
     path('delete_tariff/<int:tariff_id>/',views.delete_tariff),
     path('calculator/', views.calculator_view, name="calculator"),
-    path('get_payment_cost/',views.get_payment_cost)
+    path('get_payment_cost/',views.get_payment_cost),
+    path("/", lambda request: redirect("calculator")),
+    path("", lambda request: redirect("calculator")),
 ]

@@ -13,3 +13,4 @@ drf-yasg
 setuptools
 coreapi
 pytest
+gunicorn
