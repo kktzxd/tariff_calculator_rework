@@ -34,16 +34,46 @@ function get_inputs(){
     }
     return params
 }
-function calculate(){
-    let params = get_inputs()
-    let url = "http://10.10.5.24:8008/get_payment_cost/";
-    let request = new XMLHttpRequest();
-    request.open("POST", url, false);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.send(JSON.stringify(params));
-    let response = JSON.parse(request.responseText);
-    let payment = response["payment"]
+// function calculate(){
+//     let params = get_inputs()
+//     // let url = "http://10.10.5.24:8008/get_payment_cost/";
+//     let url = "/get_payment_cost/"; // для локалки
+//     let request = new XMLHttpRequest();
+//     request.open("POST", url, false);
+//     request.setRequestHeader("Content-Type", "application/json");
+//     request.send(JSON.stringify(params));
+//     let response = JSON.parse(request.responseText);
+//     let payment = response["payment"]
 
-    let result = document.getElementById('result')
-    result.textContent = payment + " руб."
+//     let result = document.getElementById('result')
+//     result.textContent = payment + " руб."
+// }
+
+async function calculate() {
+    let params = get_inputs();
+    let url = "/get_payment_cost/";
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(params)
+        });
+
+        if (!response.ok) {
+            throw new Error("Ошибка при получении данных: " + response.status);
+        }
+
+        const data = await response.json();
+        const payment = data.payment;
+
+        let result = document.getElementById("result");
+        result.textContent = payment + " руб.";
+    } catch (error) {
+        console.error("Ошибка:", error);
+        let result = document.getElementById("result");
+        result.textContent = "Ошибка при расчёте";
+    }
 }

@@ -1,11 +1,13 @@
 from django.test import TestCase
 import unittest
+from decimal import Decimal
 from calculator.models import Tariff
 from utils.date_formetter import ru_to_ISO
 from datetime import timedelta
 from math import ceil
 from utils.timeit import timeit
-from calculator.calculator import calculator
+from calculator.calculator import calculator, calculator_month
+import calendar #для calculator_month
 class DateFilterTest(TestCase):
 
     def setUp(self):
@@ -143,5 +145,30 @@ class DateFilterTest(TestCase):
             result+=cost_per_day
         result*=square
         self.assertEqual(result,compare_result)
-
         
+    #новый тест
+    def test_compare_code_month(self):
+        start_date = "10.11.2020"
+        end_date = "20.01.2021"
+        square = 100
+        compare_result = calculator_month(start_date, end_date, square)
+        start_date = ru_to_ISO(start_date)
+        end_date = ru_to_ISO(end_date)
+        cur_date = start_date
+        tariffs = Tariff.objects.all()
+        result = 0
+        while cur_date <= end_date:
+            cost_per_day = None
+            days_in_month = calendar.monthrange(cur_date.year, cur_date.month)[1]
+            for tariff in tariffs:
+                if tariff.start_date <= cur_date <= tariff.end_date:
+                    cost_per_day = tariff.cost / days_in_month
+                    break
+            cur_date += timedelta(days=1)
+            result += cost_per_day
+        result *= square
+        result = round(result, 2)
+        result = float(result)
+        print(f"[DEBUG] Результат вручную: {result} ({type(result)})")
+        print(f"[DEBUG] Результат calculator_month: {compare_result} ({type(compare_result)})")
+        self.assertEqual(result, compare_result)

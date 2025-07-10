@@ -8,7 +8,9 @@ import json
 from decimal import Decimal
 import calculator.seriallizers
 from rest_framework.response import Response
-from calculator.calculator import calculator as calc
+#from calculator.calculator import calculator as calc
+from calculator.calculator import calculator_month as calc2 #новая функция
+
 # Create your views here.
 def tariffs(request):
     # data = {
@@ -58,6 +60,7 @@ def get_payment_cost(request:HttpRequest):
         start_date = data["start_date"]
         end_date = data["end_date"]
         square = data["square"]
-        payment = calc(start_date, end_date, square)
+        #payment = calc(start_date, end_date, square)
+        payment = calc2(start_date, end_date, square) #новая
         data = {"payment":payment}
         return JsonResponse(data)

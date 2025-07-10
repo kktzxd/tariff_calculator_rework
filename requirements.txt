@@ -14,3 +14,4 @@ setuptools
 coreapi
 pytest
 gunicorn
+django-cors-headers

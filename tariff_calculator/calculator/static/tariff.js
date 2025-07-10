@@ -86,7 +86,7 @@ function save_changes(row){
         location.reload();
     }
     else if (request.status == 404){
-        alert("Тариф не был сохранен, он не корректен")
+        alert("Тариф не был сохранен, он некорректен")
     }
 
 }
