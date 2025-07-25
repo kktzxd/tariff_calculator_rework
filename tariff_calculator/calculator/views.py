@@ -10,8 +10,9 @@ import calculator.seriallizers
 from rest_framework.response import Response
 #from calculator.calculator import calculator as calc
 from calculator.calculator import calculator_month as calc2 #новая функция
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required(login_url="login")
 def tariffs(request):
     # data = {
     # "tariffs": [
@@ -30,6 +31,7 @@ def save_tariff(request:HttpRequest):
         end_date = data["end_date"]
         end_date = ru_to_ISO(end_date)
         cost = data["cost"]
+        cost = cost.replace(",", ".")
         cost = Decimal(cost)
         new_tarriff = Tariff(start_date=start_date, end_date=end_date, cost=cost)
         try:

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, reverse
 from django.shortcuts import redirect
 import calculator.views as views
+from calculator.login import login_user, logout_user
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tariffs/', views.tariffs,name="tariffs"),
@@ -27,4 +28,6 @@ urlpatterns = [
     path('get_payment_cost/',views.get_payment_cost),
     path("/", lambda request: redirect("calculator")),
     path("", lambda request: redirect("calculator")),
+    path('login/', login_user, name="login"),
+    path('logout/', logout_user, name='logout')
 ]

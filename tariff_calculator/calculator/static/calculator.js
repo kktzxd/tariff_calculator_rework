@@ -23,9 +23,21 @@ function check_dates(start, end){
     }
     return true
 }
+function add_century_to_year(date){
+    date = date.split(".")
+    let year = date[2] 
+    if (year.length == 2){
+        year = "20"+year;
+    }
+    date[2] = year;
+    date = date.join(".");
+    return year;
+}
 function get_inputs(){
     let start = document.getElementById("start_date")
     let end = document.getElementById("end_date")
+    start = add_century_to_year(start);
+    end = add_century_to_year(end);
     let square = document.getElementById("square");
     let params = {
         "start_date":start.value,

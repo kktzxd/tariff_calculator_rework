@@ -31,6 +31,7 @@ def calculator_month(start_date:str, end_date:str, square:str):
     tariffs = Tariff.objects.all()
     start_date = ru_to_ISO(start_date)
     end_date = ru_to_ISO(end_date)
+    square = square.replace(",", ".")
     square = Decimal(square)
     payment = 0
     cur_date = start_date
