@@ -44,7 +44,6 @@ def calculator_month(start_date:str, end_date:str, square:str):
                 if tariff.start_date <= cur_date <= tariff.end_date:
                     cost_per_day = tariff.cost/days_in_this_month #заменил 30 на точное число дней в месяце
                     if prev_month != (cur_date.year, cur_date.month):
-                        print(f"{cur_date.strftime('%Y-%m')} — тариф: {tariff.cost}")
                         prev_month = (cur_date.year, cur_date.month)
                     break
         cur_date+=delta_day
