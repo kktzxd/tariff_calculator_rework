@@ -39,7 +39,7 @@ def calculator_month(start_date:str, end_date:str, square:str):
     prev_month = None
     while cur_date <= end_date:
         cost_per_day = 0
-        days_in_this_month = calendar.monthrange(cur_date.year, cur_date.month)[1] #функция вовзращает день недели первого числа месяца и кол-во дней в месяце(беру это)
+        days_in_this_month = calendar.monthrange(cur_date.year, cur_date.month)[1] #функция вовзращает день недели первого числа месяца [0] и кол-во дней в месяце [1]
         for tariff in tariffs:
                 if tariff.start_date <= cur_date <= tariff.end_date:
                     cost_per_day = tariff.cost/days_in_this_month #заменил 30 на точное число дней в месяце

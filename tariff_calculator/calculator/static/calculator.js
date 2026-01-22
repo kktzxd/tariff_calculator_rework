@@ -1,8 +1,8 @@
 function check_square(square){
     try{
         square = Number(square)
-        if (square == NaN)
-            return false;
+        if (isNaN(square))
+    return false;
         return true;
     }
     catch{
@@ -31,20 +31,20 @@ function add_century_to_year(date){
     }
     date[2] = year;
     date = date.join(".");
-    return year;
+    return date
 }
 function get_inputs(){
-    let start = document.getElementById("start_date")
-    let end = document.getElementById("end_date")
+    let start = document.getElementById("start_date").value;
+    let end = document.getElementById("end_date").value;
+    let square = document.getElementById("square").value;
     start = add_century_to_year(start);
     end = add_century_to_year(end);
-    let square = document.getElementById("square");
     let params = {
-        "start_date":start.value,
-        "end_date":end.value,
-        "square":square.value
+        "start_date": start,
+        "end_date": end,
+        "square": square
     }
-    return params
+    return params;
 }
 // function calculate(){
 //     let params = get_inputs()

@@ -2,7 +2,7 @@ from django.core import serializers
 import calculator.models as models
 from datetime import date
 def tariff_serializer():
-    tariffs = models.Tariff.objects.all()
+    tariffs = models.Tariff.objects.all().order_by('pk')
     data = serializers.serialize('python', tariffs)
     tariffs = []
     for item in data:
