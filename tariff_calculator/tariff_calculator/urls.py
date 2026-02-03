@@ -15,10 +15,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, reverse
+from django.urls import path, reverse, re_path
 from django.shortcuts import redirect
 import calculator.views as views
 from calculator.login import login_user, logout_user
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
+app_name="Tariff_Calculator"
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Spam Filter API",
+        default_version='v1',
+        description="API для фильтрации спама",
+        terms_of_service="https://example.com/terms/",
+        contact=openapi.Contact(email="admin@example.com"),
+        license=openapi.License(name="MIT License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tariffs/', views.tariffs,name="tariffs"),
@@ -29,5 +45,9 @@ urlpatterns = [
     path("/", lambda request: redirect("calculator")),
     path("", lambda request: redirect("calculator")),
     path('login/', login_user, name="login"),
-    path('logout/', logout_user, name='logout')
+    path('logout/', logout_user, name='logout'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$',
+        schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc')
 ]

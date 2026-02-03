@@ -11,6 +11,10 @@ from rest_framework.response import Response
 #from calculator.calculator import calculator as calc
 from calculator.calculator import calculator_month as calc2 #новая функция
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
 # Create your views here.
 @login_required(login_url="login")
 def tariffs(request):
@@ -55,7 +59,24 @@ def get_tarrifs(request:HttpRequest):
         tariffs = calculator.seriallizers.tariff_serializer()
         tariffs = json.loads(tariffs)
         return JsonResponse(tariffs)
+@swagger_auto_schema(
+        method='post',
+        operation_description='расчет платежа по тарифу за период',
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=['start_date', 'end_date', 'square'],
+            properties={
+                'start_date': openapi.Schema(type=openapi.TYPE_STRING, format='date', description='Дата начала периода', example='01.01.2020'),
+                'end_date': openapi.Schema(type=openapi.TYPE_STRING, format='date', description='Дата окончания периода', example='31.01.2020'),
+                'square': openapi.Schema(type=openapi.TYPE_NUMBER, description='Площадь помещения', example=36.5),
+            },
+        ),
+        responses={
+            200: openapi.Response(description="Расчёт выполнен", schema=openapi.Schema(type=openapi.TYPE_NUMBER, example={'payment':500}))
+        }
+)
 @csrf_exempt
+@api_view(['POST'])
 def get_payment_cost(request:HttpRequest):
     if request.method=="POST":
         data = json.loads(request.body)
