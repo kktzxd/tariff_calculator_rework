@@ -72,7 +72,7 @@ def get_tarrifs(request:HttpRequest):
             },
         ),
         responses={
-            200: openapi.Response(description="Расчёт выполнен", schema=openapi.Schema(type=openapi.TYPE_NUMBER, example={'payment':500}))
+            200: openapi.Response(description="Расчёт выполнен", schema=openapi.Schema(type=openapi.TYPE_NUMBER, example={'payment':500, "start_date":'01.01.2020','end_date':'31.01.2020'}))
         }
 )
 @csrf_exempt
@@ -85,5 +85,5 @@ def get_payment_cost(request:HttpRequest):
         square = data["square"]
         #payment = calc(start_date, end_date, square)
         payment = calc2(start_date, end_date, square) #новая
-        data = {"payment":payment}
+        data = {"payment":payment, 'start_date':start_date, "end_date":end_date}
         return JsonResponse(data)
