@@ -55,6 +55,7 @@ def delete_tariff(request:HttpRequest, tariff_id:int):
 def calculator_view(request:HttpRequest):
     tariffs = calculator.seriallizers.tariff_serializer()
     return render(request, "calculator.html", tariffs)
+
 def get_tarrifs(request:HttpRequest):
         tariffs = calculator.seriallizers.tariff_serializer()
         tariffs = json.loads(tariffs)
